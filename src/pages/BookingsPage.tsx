@@ -74,15 +74,13 @@ export default function BookingsPage() {
   }
 
   return (
-    <main className="student-page">
-      <section className="student-shell">
-        <header className="student-header-card">
-          <div>
-            <span className="student-badge">My Bookings</span>
-            <h1>已预约课时</h1>
-            <p>查看你已经预约的一对一英语课时，也可以取消选错的预约。</p>
-          </div>
-          <div className="student-header-actions">
+    <main className="page-shell">
+      <header className="home-header">
+        <div className="container home-header-inner">
+          <a href="#/" className="brand-mark">
+            English Learning
+          </a>
+          <div className="hero-actions">
             <button className="button button-secondary" onClick={() => { window.location.hash = '#/profile'; }}>
               返回资料页
             </button>
@@ -90,97 +88,109 @@ export default function BookingsPage() {
               继续预约
             </button>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {error && <div className="student-status student-status-error">{error}</div>}
-        {successMessage && <div className="student-status student-status-success">{successMessage}</div>}
+      <section className="section">
+        <div className="container">
+          <div className="section-heading">
+            <span className="section-kicker">My Bookings</span>
+            <h2>已预约课时</h2>
+            <p>查看你已经预约的一对一英语课时，也可以取消选错的预约。</p>
+          </div>
 
-        {loading ? (
-          <div className="student-empty-state">正在加载已预约课时...</div>
-        ) : bookings.length === 0 ? (
-          <div className="student-empty-state">你当前还没有预约任何课时。</div>
-        ) : (
-          <section className="student-booking-list">
-            {bookings.map((booking) => (
-              <article className="student-booking-card" key={booking.id}>
-                <div className="student-booking-head">
-                  <div>
-                    <h2>{booking.teacher?.name || '老师信息缺失'}</h2>
-                    <p>{booking.teacher?.email || '暂无邮箱信息'}</p>
+          {error && <div className="student-status student-status-error student-status-animated">{error}</div>}
+          {successMessage && <div className="student-status student-status-success student-status-animated">{successMessage}</div>}
+
+          {loading ? (
+            <div className="student-empty-state student-loading-state">
+              <div className="student-spinner"></div>
+              <p>正在加载已预约课时...</p>
+            </div>
+          ) : bookings.length === 0 ? (
+            <div className="student-empty-state student-empty-state-enhanced">
+              <div className="student-empty-icon">📓</div>
+              <p>你当前还没有预约任何课时。</p>
+            </div>
+          ) : (
+            <div className="card-grid">
+              {bookings.map((booking, index) => (
+                <article className="content-card" key={booking.id} style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div className="student-booking-head">
+                    <div>
+                      <h3>{booking.teacher?.name || '老师信息缺失'}</h3>
+                      <p>{booking.teacher?.email || '暂无邮箱信息'}</p>
+                    </div>
+                    <span className="teacher-card-pill teacher-card-pill-status">{booking.status === 'booked' ? '已预约' : '已完成'}</span>
                   </div>
-                  <span className="teacher-card-pill">{booking.status === 'booked' ? '已预约' : '已完成'}</span>
-                </div>
 
-                <div className="student-booking-info">
-                  <span>上课日期</span>
-                  <strong>{booking.schedule ? formatDateLabel(booking.schedule.slot_date) : '未知'}</strong>
-                </div>
-                <div className="student-booking-info">
-                  <span>上课时间</span>
-                  <strong>{booking.schedule?.start_time || '未知'}</strong>
-                </div>
+                  <div className="student-booking-info student-booking-info-enhanced student-booking-schedule-inline">
+                    <span>上课安排</span>
+                    <strong>
+                      {booking.schedule
+                        ? `${formatDateLabel(booking.schedule.slot_date)} · ${booking.schedule.start_time}`
+                        : '未知'}
+                    </strong>
+                  </div>
 
-                <div className="student-booking-actions">
-                  <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
-                    再选其他课时
-                  </button>
-                  <button
-                    className="button student-button-danger"
-                    onClick={() => setConfirmBooking(booking)}
-                    disabled={booking.status !== 'booked' || cancellingId === booking.id}
-                  >
-                    {cancellingId === booking.id ? '取消中...' : '取消预约'}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </section>
-        )}
+                  <div className="hero-actions">
+                    <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
+                      再选其他课时
+                    </button>
+                    <button
+                      className="button student-button-danger"
+                      onClick={() => setConfirmBooking(booking)}
+                      disabled={booking.status !== 'booked' || cancellingId === booking.id}
+                    >
+                      {cancellingId === booking.id ? '取消中...' : '取消预约'}
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
-        {confirmBooking && (
-          <div className="student-modal-backdrop" onClick={() => setConfirmBooking(null)}>
-            <div className="student-modal-card" onClick={(event) => event.stopPropagation()}>
-              <span className="student-badge">Confirm Cancel</span>
-              <h2>确认取消这个课时？</h2>
-              <p>
-                你将取消
-                {' '}
-                <strong>{confirmBooking.teacher?.name || '该老师'}</strong>
-                {' '}
-                的课程预约。
-              </p>
-              <div className="student-modal-summary">
-                <div className="student-booking-info">
-                  <span>上课日期</span>
-                  <strong>
-                    {confirmBooking.schedule ? formatDateLabel(confirmBooking.schedule.slot_date) : '未知'}
-                  </strong>
-                </div>
-                <div className="student-booking-info">
-                  <span>上课时间</span>
-                  <strong>{confirmBooking.schedule?.start_time || '未知'}</strong>
-                </div>
+      {confirmBooking && (
+        <div className="student-modal-backdrop student-modal-fade-in" onClick={() => setConfirmBooking(null)}>
+          <div className="student-modal-card student-modal-scale-in" onClick={(event) => event.stopPropagation()}>
+            <span className="section-kicker">Confirm Cancel</span>
+            <h2>确认取消这个课时？</h2>
+            <p>
+              你将取消 <strong>{confirmBooking.teacher?.name || '该老师'}</strong> 的课程预约。
+            </p>
+            <div className="student-modal-summary student-modal-summary-enhanced">
+              <div className="student-booking-info">
+                <span>上课日期</span>
+                <strong>
+                  {confirmBooking.schedule ? formatDateLabel(confirmBooking.schedule.slot_date) : '未知'}
+                </strong>
               </div>
-              <div className="student-modal-actions">
-                <button
-                  className="button button-secondary"
-                  onClick={() => setConfirmBooking(null)}
-                  disabled={cancellingId === confirmBooking.id}
-                >
-                  先保留
-                </button>
-                <button
-                  className="button student-button-danger"
-                  onClick={() => void handleCancel(confirmBooking.id)}
-                  disabled={cancellingId === confirmBooking.id}
-                >
-                  {cancellingId === confirmBooking.id ? '取消中...' : '确认取消'}
-                </button>
+              <div className="student-booking-info">
+                <span>上课时间</span>
+                <strong>{confirmBooking.schedule?.start_time || '未知'}</strong>
               </div>
             </div>
+            <div className="hero-actions">
+              <button
+                className="button button-secondary"
+                onClick={() => setConfirmBooking(null)}
+                disabled={cancellingId === confirmBooking.id}
+              >
+                先保留
+              </button>
+              <button
+                className="button student-button-danger"
+                onClick={() => void handleCancel(confirmBooking.id)}
+                disabled={cancellingId === confirmBooking.id}
+              >
+                {cancellingId === confirmBooking.id ? '取消中...' : '确认取消'}
+              </button>
+            </div>
           </div>
-        )}
-      </section>
+        </div>
+      )}
     </main>
   );
 }

@@ -37,59 +37,71 @@ export default function TeacherListPage() {
   }
 
   return (
-    <main className="student-page">
-      <section className="student-shell">
-        <header className="student-header-card">
-          <div>
-            <span className="student-badge">Teacher Directory</span>
-            <h1>选择老师</h1>
+    <main className="page-shell">
+      <header className="home-header">
+        <div className="container home-header-inner">
+          <a href="#/" className="brand-mark">
+            English Learning
+          </a>
+          <button className="button button-secondary" onClick={() => { window.location.hash = '#/profile'; }}>
+            返回资料页
+          </button>
+        </div>
+      </header>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-heading">
+            <span className="section-kicker">Teacher Directory</span>
+            <h2>选择老师</h2>
             <p>查看可预约老师，进入课时表后选择你想上的一对一英语课时间。</p>
           </div>
-          <div className="student-header-actions">
-            <button className="button button-secondary" onClick={() => { window.location.hash = '#/profile'; }}>
-              返回资料页
-            </button>
-          </div>
-        </header>
 
-        {error && <div className="student-status student-status-error">{error}</div>}
+          {error && <div className="student-status student-status-error student-status-animated">{error}</div>}
 
-        {loading ? (
-          <div className="student-empty-state">正在加载教师列表...</div>
-        ) : teachers.length === 0 ? (
-          <div className="student-empty-state">当前还没有可预约的老师。</div>
-        ) : (
-          <section className="teacher-card-grid">
-            {teachers.map((teacher) => (
-              <article className="teacher-card" key={teacher.id}>
-                <div className="teacher-card-top">
-                  <div className="teacher-card-avatar">
-                    {teacher.name.charAt(0).toUpperCase()}
+          {loading ? (
+            <div className="student-empty-state student-loading-state">
+              <div className="student-spinner"></div>
+              <p>正在加载教师列表...</p>
+            </div>
+          ) : teachers.length === 0 ? (
+            <div className="student-empty-state student-empty-state-enhanced">
+              <div className="student-empty-icon">👨‍🏫</div>
+              <p>当前还没有可预约的老师。</p>
+            </div>
+          ) : (
+            <div className="card-grid">
+              {teachers.map((teacher, index) => (
+                <article className="content-card" key={teacher.id} style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div className="teacher-card-top">
+                    <div className="teacher-card-avatar teacher-avatar-pulse">
+                      {teacher.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3>{teacher.name}</h3>
+                      <p>{teacher.email}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2>{teacher.name}</h2>
-                    <p>{teacher.email}</p>
+
+                  <p className="teacher-card-bio">
+                    {teacher.bio || '这位老师还没有填写个人简介。'}
+                  </p>
+
+                  <div className="teacher-card-meta">
+                    <span className="teacher-card-pill teacher-card-pill-animated">开放课时 {teacher.open_slot_count}</span>
                   </div>
-                </div>
 
-                <p className="teacher-card-bio">
-                  {teacher.bio || '这位老师还没有填写个人简介。'}
-                </p>
-
-                <div className="teacher-card-meta">
-                  <span className="teacher-card-pill">开放课时 {teacher.open_slot_count}</span>
-                </div>
-
-                <button
-                  className="button button-primary"
-                  onClick={() => { window.location.hash = `#/teachers/${teacher.id}`; }}
-                >
-                  查看课时表
-                </button>
-              </article>
-            ))}
-          </section>
-        )}
+                  <button
+                    className="button button-primary"
+                    onClick={() => { window.location.hash = `#/teachers/${teacher.id}`; }}
+                  >
+                    查看课时表
+                  </button>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </main>
   );
