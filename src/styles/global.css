@@ -842,3 +842,467 @@ html {
     padding: 24px 0 48px;
   }
 }
+
+.student-page {
+  min-height: 100vh;
+  padding: 32px 20px 48px;
+}
+
+.student-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.student-shell-narrow {
+  width: min(920px, 100%);
+}
+
+.student-header-card,
+.student-panel {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 28px;
+  box-shadow: var(--shadow-md);
+}
+
+.student-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px 32px;
+}
+
+.student-header-card h1,
+.student-panel h2 {
+  margin: 12px 0 0;
+}
+
+.student-header-card p,
+.student-panel p {
+  color: var(--text-secondary);
+}
+
+.student-header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.student-badge {
+  display: inline-block;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  background: var(--primary-light);
+  border-radius: 999px;
+}
+
+.student-status {
+  margin-top: 20px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+}
+
+.student-status-error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+}
+
+.student-status-success {
+  background: #ecfdf3;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.student-empty-state {
+  margin-top: 24px;
+  padding: 32px 20px;
+  border: 1px dashed #c7d2fe;
+  border-radius: 20px;
+  text-align: center;
+  color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.teacher-card-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 24px;
+}
+
+.teacher-card {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.teacher-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.teacher-card-top h2 {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+
+.teacher-card-top p {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+}
+
+.teacher-card-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.teacher-card-bio {
+  margin: 0;
+  min-height: 48px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.teacher-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.teacher-card-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.slot-day-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.student-booking-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.student-booking-card {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.student-booking-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.student-booking-head h2 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.student-booking-head p {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+}
+
+.student-booking-info {
+  display: grid;
+  gap: 4px;
+}
+
+.student-booking-info span {
+  color: var(--text-tertiary);
+  font-size: 0.86rem;
+}
+
+.student-booking-info strong {
+  color: var(--text-primary);
+  font-size: 0.98rem;
+}
+
+.student-booking-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.student-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+.student-modal-card {
+  width: min(480px, 100%);
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.student-modal-card h2 {
+  margin: 14px 0 10px;
+  font-size: 1.35rem;
+}
+
+.student-modal-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.student-modal-summary {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  border: 1px solid var(--border-light);
+}
+
+.student-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.slot-day-card {
+  padding: 22px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.slot-day-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.slot-day-head h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.slot-day-head span {
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+}
+
+.slot-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.slot-chip {
+  border: 1px solid rgba(49, 87, 213, 0.16);
+  border-radius: 999px;
+  padding: 11px 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #eef4ff 100%);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.slot-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.slot-chip:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+.student-button-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+}
+
+.student-profile-card {
+  overflow: hidden;
+  padding: 0;
+  margin-top: 24px;
+}
+
+.student-profile-hero {
+  padding: 40px 32px 32px;
+  text-align: center;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 38%),
+    linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #fff;
+}
+
+.student-profile-avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--primary);
+  font-size: 2.2rem;
+  font-weight: 800;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+}
+
+.student-profile-hero h2 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.student-profile-hero p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.student-profile-body {
+  padding: 28px 32px 32px;
+}
+
+.student-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.student-profile-list {
+  display: grid;
+  gap: 18px;
+}
+
+.student-profile-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.student-profile-label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.student-profile-value {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.student-profile-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+@media (max-width: 767px) {
+  .student-page {
+    padding: 20px 16px 32px;
+  }
+
+  .student-header-card,
+  .student-panel,
+  .slot-day-card,
+  .teacher-card {
+    padding: 22px;
+  }
+
+  .student-header-card {
+    flex-direction: column;
+  }
+
+  .student-booking-head {
+    flex-direction: column;
+  }
+
+  .student-modal-card {
+    padding: 20px;
+  }
+
+  .student-modal-actions {
+    justify-content: stretch;
+  }
+
+  .student-modal-actions .button {
+    width: 100%;
+  }
+
+  .slot-day-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .student-profile-hero,
+  .student-profile-body {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .student-profile-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

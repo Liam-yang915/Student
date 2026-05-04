@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 import { authService } from '../services/api';
 
+type StudentProfileData = {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+};
+
 export default function ProfilePage() {
-  const [student, setStudent] = useState<any>(null);
+  const [student, setStudent] = useState<StudentProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is authenticated
     if (!authService.isAuthenticated()) {
       window.location.hash = '#/login';
       return;
     }
 
-    // Get stored student info
     const storedStudent = authService.getStoredStudent();
     setStudent(storedStudent);
     setLoading(false);
@@ -24,7 +29,6 @@ export default function ProfilePage() {
       window.location.hash = '#/login';
     } catch (err) {
       console.error('Logout error:', err);
-      // Force logout even if API call fails
       localStorage.removeItem('token');
       localStorage.removeItem('student');
       window.location.hash = '#/login';
@@ -33,14 +37,13 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
-      }}>
-        <div>Loading...</div>
-      </div>
+      <main className="student-page">
+        <section className="student-shell student-shell-narrow">
+          <div className="student-panel">
+            <div className="student-empty-state">正在加载学生资料...</div>
+          </div>
+        </section>
+      </main>
     );
   }
 
@@ -49,83 +52,75 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="profile-page">
-      {/* Top Navigation Bar */}
-      <nav className="profile-nav">
-        <div className="container profile-nav-inner">
-          <a href="#/" className="brand-mark">English Learning</a>
-          <div className="profile-nav-actions">
-            <span className="profile-nav-user">{student.name}</span>
-            <button onClick={handleLogout} className="button button-logout">
+    <main className="student-page">
+      <section className="student-shell student-shell-narrow">
+        <header className="student-header-card">
+          <div>
+            <span className="student-badge">Student Profile</span>
+            <h1>个人信息</h1>
+            <p>管理你的学生资料，查看已预约课时，或进入老师列表开始预约一对一英语课。</p>
+          </div>
+          <div className="student-header-actions">
+            <button className="button button-secondary" onClick={() => { window.location.hash = '#/bookings'; }}>
+              已预约课时
+            </button>
+            <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
+              预约老师
+            </button>
+            <button className="button student-button-danger" onClick={handleLogout}>
               退出登录
             </button>
           </div>
-        </div>
-      </nav>
+        </header>
 
-      {/* Hero Section with Avatar */}
-      <section className="profile-hero">
-        <div className="container">
-          <div className="profile-hero-content">
-            <div className="profile-avatar">
-              {student.name.charAt(0).toUpperCase()}
-            </div>
-            <div className="profile-hero-text">
-              <h1>{student.name}</h1>
-              <p className="profile-role">学生账户</p>
-            </div>
+        <section className="student-profile-card student-panel">
+          <div className="student-profile-hero">
+            <div className="student-profile-avatar">{student.name.charAt(0).toUpperCase()}</div>
+            <h2>{student.name}</h2>
+            <p>学生账户</p>
           </div>
-        </div>
-      </section>
 
-      {/* Information Grid */}
-      <section className="profile-content">
-        <div className="container">
-          <div className="profile-grid">
-            {/* Info Card */}
-            <div className="profile-info-card">
-              <h2 className="profile-section-title">基本信息</h2>
-              <div className="profile-info-list">
-                <div className="profile-info-item">
-                  <span className="profile-info-label">学生ID</span>
-                  <span className="profile-info-value">#{student.id}</span>
-                </div>
-                <div className="profile-info-item">
-                  <span className="profile-info-label">姓名</span>
-                  <span className="profile-info-value">{student.name}</span>
-                </div>
-                <div className="profile-info-item">
-                  <span className="profile-info-label">邮箱</span>
-                  <span className="profile-info-value">{student.email}</span>
-                </div>
-                <div className="profile-info-item">
-                  <span className="profile-info-label">手机号</span>
-                  <span className="profile-info-value">{student.phone || '未设置'}</span>
-                </div>
+          <div className="student-profile-body">
+            <div className="student-panel-head">
+              <div>
+                <h2>基本信息</h2>
+                <p>当前登录学生的基础资料</p>
               </div>
             </div>
 
-            {/* Quick Actions Card */}
-            <div className="profile-actions-card">
-              <h2 className="profile-section-title">快捷操作</h2>
-              <div className="profile-actions-list">
-                <button onClick={() => window.location.hash = '#/'} className="profile-action-btn">
-                  <span className="profile-action-icon">🏠</span>
-                  <span>返回首页</span>
-                </button>
-                <button className="profile-action-btn">
-                  <span className="profile-action-icon">📚</span>
-                  <span>我的课程</span>
-                </button>
-                <button className="profile-action-btn">
-                  <span className="profile-action-icon">⚙️</span>
-                  <span>账户设置</span>
-                </button>
+            <div className="student-profile-list">
+              <div className="student-profile-row">
+                <span className="student-profile-label">学生 ID</span>
+                <span className="student-profile-value">#{student.id}</span>
+              </div>
+              <div className="student-profile-row">
+                <span className="student-profile-label">姓名</span>
+                <span className="student-profile-value">{student.name}</span>
+              </div>
+              <div className="student-profile-row">
+                <span className="student-profile-label">邮箱</span>
+                <span className="student-profile-value">{student.email}</span>
+              </div>
+              <div className="student-profile-row">
+                <span className="student-profile-label">手机号</span>
+                <span className="student-profile-value">{student.phone || '未设置'}</span>
               </div>
             </div>
+
+            <div className="student-profile-actions">
+              <button className="button button-secondary" onClick={() => { window.location.hash = '#/bookings'; }}>
+                查看已预约课时
+              </button>
+              <button className="button button-primary" onClick={() => { window.location.hash = '#/teachers'; }}>
+                去选老师和课时
+              </button>
+              <button className="button student-button-danger" onClick={handleLogout}>
+                退出登录
+              </button>
+            </div>
           </div>
-        </div>
+        </section>
       </section>
-    </div>
+    </main>
   );
 }
