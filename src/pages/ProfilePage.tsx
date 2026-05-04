@@ -49,227 +49,83 @@ export default function ProfilePage() {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f3f4f6',
-      padding: '40px 20px'
-    }}>
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto'
-      }}>
-        {/* Header */}
-        <header style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '32px'
-        }}>
-          <div>
-            <h1 style={{
-              fontSize: '28px',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '4px'
-            }}>
-              个人信息
-            </h1>
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>
-              查看和管理您的个人资料
-            </p>
+    <div className="profile-page">
+      {/* Top Navigation Bar */}
+      <nav className="profile-nav">
+        <div className="container profile-nav-inner">
+          <a href="#/" className="brand-mark">English Learning</a>
+          <div className="profile-nav-actions">
+            <span className="profile-nav-user">{student.name}</span>
+            <button onClick={handleLogout} className="button button-logout">
+              退出登录
+            </button>
           </div>
-          <button
-            onClick={handleLogout}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#ef4444',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '500'
-            }}
-          >
-            退出登录
-          </button>
-        </header>
+        </div>
+      </nav>
 
-        {/* Profile Card */}
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          overflow: 'hidden'
-        }}>
-          {/* Avatar Section */}
-          <div style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            padding: '40px',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              width: '100px',
-              height: '100px',
-              borderRadius: '50%',
-              backgroundColor: 'white',
-              margin: '0 auto 16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '40px',
-              fontWeight: 'bold',
-              color: '#667eea'
-            }}>
+      {/* Hero Section with Avatar */}
+      <section className="profile-hero">
+        <div className="container">
+          <div className="profile-hero-content">
+            <div className="profile-avatar">
               {student.name.charAt(0).toUpperCase()}
             </div>
-            <h2 style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              color: 'white',
-              marginBottom: '4px'
-            }}>
-              {student.name}
-            </h2>
-            <p style={{
-              color: 'rgba(255,255,255,0.9)',
-              fontSize: '14px'
-            }}>
-              学生
-            </p>
-          </div>
-
-          {/* Information Section */}
-          <div style={{ padding: '32px' }}>
-            <h3 style={{
-              fontSize: '18px',
-              fontWeight: '600',
-              color: '#111827',
-              marginBottom: '24px'
-            }}>
-              基本信息
-            </h3>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* ID */}
-              <div style={{
-                display: 'flex',
-                paddingBottom: '20px',
-                borderBottom: '1px solid #e5e7eb'
-              }}>
-                <div style={{
-                  width: '120px',
-                  color: '#6b7280',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}>
-                  学生ID
-                </div>
-                <div style={{
-                  flex: 1,
-                  color: '#111827',
-                  fontSize: '14px'
-                }}>
-                  #{student.id}
-                </div>
-              </div>
-
-              {/* Name */}
-              <div style={{
-                display: 'flex',
-                paddingBottom: '20px',
-                borderBottom: '1px solid #e5e7eb'
-              }}>
-                <div style={{
-                  width: '120px',
-                  color: '#6b7280',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}>
-                  姓名
-                </div>
-                <div style={{
-                  flex: 1,
-                  color: '#111827',
-                  fontSize: '14px'
-                }}>
-                  {student.name}
-                </div>
-              </div>
-
-              {/* Email */}
-              <div style={{
-                display: 'flex',
-                paddingBottom: '20px',
-                borderBottom: '1px solid #e5e7eb'
-              }}>
-                <div style={{
-                  width: '120px',
-                  color: '#6b7280',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}>
-                  邮箱
-                </div>
-                <div style={{
-                  flex: 1,
-                  color: '#111827',
-                  fontSize: '14px'
-                }}>
-                  {student.email}
-                </div>
-              </div>
-
-              {/* Phone */}
-              <div style={{
-                display: 'flex',
-                paddingBottom: '20px',
-                borderBottom: '1px solid #e5e7eb'
-              }}>
-                <div style={{
-                  width: '120px',
-                  color: '#6b7280',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}>
-                  手机号
-                </div>
-                <div style={{
-                  flex: 1,
-                  color: '#111827',
-                  fontSize: '14px'
-                }}>
-                  {student.phone || '未设置'}
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div style={{
-              marginTop: '32px',
-              display: 'flex',
-              gap: '12px'
-            }}>
-              <button
-                onClick={() => window.location.hash = '#/'}
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  backgroundColor: '#3b82f6',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}
-              >
-                返回首页
-              </button>
+            <div className="profile-hero-text">
+              <h1>{student.name}</h1>
+              <p className="profile-role">学生账户</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Information Grid */}
+      <section className="profile-content">
+        <div className="container">
+          <div className="profile-grid">
+            {/* Info Card */}
+            <div className="profile-info-card">
+              <h2 className="profile-section-title">基本信息</h2>
+              <div className="profile-info-list">
+                <div className="profile-info-item">
+                  <span className="profile-info-label">学生ID</span>
+                  <span className="profile-info-value">#{student.id}</span>
+                </div>
+                <div className="profile-info-item">
+                  <span className="profile-info-label">姓名</span>
+                  <span className="profile-info-value">{student.name}</span>
+                </div>
+                <div className="profile-info-item">
+                  <span className="profile-info-label">邮箱</span>
+                  <span className="profile-info-value">{student.email}</span>
+                </div>
+                <div className="profile-info-item">
+                  <span className="profile-info-label">手机号</span>
+                  <span className="profile-info-value">{student.phone || '未设置'}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions Card */}
+            <div className="profile-actions-card">
+              <h2 className="profile-section-title">快捷操作</h2>
+              <div className="profile-actions-list">
+                <button onClick={() => window.location.hash = '#/'} className="profile-action-btn">
+                  <span className="profile-action-icon">🏠</span>
+                  <span>返回首页</span>
+                </button>
+                <button className="profile-action-btn">
+                  <span className="profile-action-icon">📚</span>
+                  <span>我的课程</span>
+                </button>
+                <button className="profile-action-btn">
+                  <span className="profile-action-icon">⚙️</span>
+                  <span>账户设置</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

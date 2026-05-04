@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
 import HeroSection from "../components/home/HeroSection";
 import FeatureSection from "../components/home/FeatureSection";
 import StepSection from "../components/home/StepSection";
 import CtaSection from "../components/home/CtaSection";
+import { authService } from "../services/api";
 
 export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(authService.isAuthenticated());
+  }, []);
+
   return (
     <main className="page-shell">
       <header className="home-header">
@@ -11,8 +19,11 @@ export default function HomePage() {
           <a href="#/" className="brand-mark">
             English Learning
           </a>
-          <a href="#/login" className="button button-secondary">
-            学生登录
+          <a
+            href={isAuthenticated ? "#/profile" : "#/login"}
+            className="button button-secondary"
+          >
+            {isAuthenticated ? "个人中心" : "学生登录"}
           </a>
         </div>
       </header>
