@@ -77,15 +77,15 @@ export default function BookingsPage() {
     <main className="page-shell">
       <header className="home-header">
         <div className="container home-header-inner">
-          <a href="#/" className="brand-mark">
+          <a href="#/profile" className="brand-mark">
             English Learning
           </a>
           <div className="hero-actions">
-            <button className="button button-secondary" onClick={() => { window.location.hash = '#/profile'; }}>
-              返回资料页
-            </button>
-            <button className="button button-primary" onClick={() => { window.location.hash = '#/teachers'; }}>
+            <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
               继续预约
+            </button>
+            <button className="button button-primary" onClick={() => { window.location.hash = '#/profile'; }}>
+              返回资料页
             </button>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function BookingsPage() {
           <div className="section-heading">
             <span className="section-kicker">My Bookings</span>
             <h2>已预约课时</h2>
-            <p>查看你已经预约的一对一英语课时，也可以取消选错的预约。</p>
+            <p>查看你已经预约的一对一英语课时，也可以为对应老师选择当前教材。</p>
           </div>
 
           {error && <div className="student-status student-status-error student-status-animated">{error}</div>}
@@ -109,7 +109,7 @@ export default function BookingsPage() {
             </div>
           ) : bookings.length === 0 ? (
             <div className="student-empty-state student-empty-state-enhanced">
-              <div className="student-empty-icon">📓</div>
+              <div className="student-empty-icon">预约</div>
               <p>你当前还没有预约任何课时。</p>
             </div>
           ) : (
@@ -121,19 +121,38 @@ export default function BookingsPage() {
                       <h3>{booking.teacher?.name || '老师信息缺失'}</h3>
                       <p>{booking.teacher?.email || '暂无邮箱信息'}</p>
                     </div>
-                    <span className="teacher-card-pill teacher-card-pill-status">{booking.status === 'booked' ? '已预约' : '已完成'}</span>
+                    <span className="teacher-card-pill teacher-card-pill-status">
+                      {booking.status === 'booked' ? '已预约' : '已完成'}
+                    </span>
                   </div>
 
-                  <div className="student-booking-info student-booking-info-enhanced student-booking-schedule-inline">
-                    <span>上课安排</span>
-                    <strong>
-                      {booking.schedule
-                        ? `${formatDateLabel(booking.schedule.slot_date)} · ${booking.schedule.start_time}`
-                        : '未知'}
-                    </strong>
+                  <div className="student-booking-info student-booking-info-enhanced">
+                    <span>上课日期</span>
+                    <strong>{booking.schedule ? formatDateLabel(booking.schedule.slot_date) : '未知'}</strong>
+                  </div>
+
+                  <div className="student-booking-info student-booking-info-enhanced">
+                    <span>上课时间</span>
+                    <strong>{booking.schedule?.start_time || '未知'}</strong>
+                  </div>
+
+                  <div className="student-booking-info student-booking-info-enhanced">
+                    <span>当前教材</span>
+                    <strong>{booking.current_textbook?.name || '还未选择教材'}</strong>
                   </div>
 
                   <div className="hero-actions">
+                    <button
+                      className="button button-secondary"
+                      onClick={() => {
+                        if (booking.teacher) {
+                          window.location.hash = `#/teachers/${booking.teacher.id}/textbooks`;
+                        }
+                      }}
+                      disabled={!booking.teacher}
+                    >
+                      {booking.current_textbook ? '更换教材' : '选择教材'}
+                    </button>
                     <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
                       再选其他课时
                     </button>

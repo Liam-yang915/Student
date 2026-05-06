@@ -102,7 +102,13 @@ export default function TeacherSlotsPage({ teacherId }: Props) {
           </div>
           <div className="student-header-actions">
             <button className="button button-secondary" onClick={() => { window.location.hash = '#/teachers'; }}>
-              返回教师列表
+              返回老师列表
+            </button>
+            <button className="button button-secondary" onClick={() => { window.location.hash = '#/bookings'; }}>
+              我的预约
+            </button>
+            <button className="button button-primary" onClick={() => { window.location.hash = '#/profile'; }}>
+              资料页
             </button>
           </div>
         </header>

@@ -56,6 +56,38 @@ export interface StudentBookingItem {
     start_time: string;
     status: string;
   };
+  current_textbook: null | {
+    id: number;
+    name: string;
+    description?: string | null;
+  };
+}
+
+export interface StudentTextbookItem {
+  id: number;
+  name: string;
+  description: string | null;
+  cover_image: string | null;
+  selected: boolean;
+}
+
+export interface TeacherTextbooksResponse {
+  success: boolean;
+  data?: {
+    teacher: {
+      id: number;
+      name: string;
+      email: string;
+    };
+    current_textbook: null | {
+      id: number;
+      name: string;
+      description: string | null;
+      cover_image: string | null;
+    };
+    textbooks: StudentTextbookItem[];
+  };
+  message?: string;
 }
 
 export interface TeacherSlotsResponse {
@@ -176,6 +208,34 @@ export const authService = {
         'Authorization': `Bearer ${getToken()}`,
         'Accept': 'application/json',
       },
+    });
+
+    return await response.json();
+  },
+
+  async getTeacherTextbooks(teacherId: string): Promise<TeacherTextbooksResponse> {
+    const response = await fetch(`${API_BASE_URL}/student/teachers/${teacherId}/textbooks`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Accept': 'application/json',
+      },
+    });
+
+    return await response.json();
+  },
+
+  async selectTeacherTextbook(
+    teacherId: string,
+    textbookId: number
+  ): Promise<{ success: boolean; message?: string; data?: { textbook: { id: number; name: string }; current_lesson: { id: number; name: string } } }> {
+    const response = await fetch(`${API_BASE_URL}/student/teachers/${teacherId}/textbooks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ textbook_id: textbookId }),
     });
 
     return await response.json();

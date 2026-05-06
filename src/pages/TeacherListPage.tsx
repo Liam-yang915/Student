@@ -40,12 +40,17 @@ export default function TeacherListPage() {
     <main className="page-shell">
       <header className="home-header">
         <div className="container home-header-inner">
-          <a href="#/" className="brand-mark">
+          <a href="#/profile" className="brand-mark">
             English Learning
           </a>
-          <button className="button button-secondary" onClick={() => { window.location.hash = '#/profile'; }}>
-            返回资料页
-          </button>
+          <div className="hero-actions">
+            <button className="button button-secondary" onClick={() => { window.location.hash = '#/bookings'; }}>
+              我的预约
+            </button>
+            <button className="button button-primary" onClick={() => { window.location.hash = '#/profile'; }}>
+              返回资料页
+            </button>
+          </div>
         </div>
       </header>
 
@@ -54,7 +59,7 @@ export default function TeacherListPage() {
           <div className="section-heading">
             <span className="section-kicker">Teacher Directory</span>
             <h2>选择老师</h2>
-            <p>查看可预约老师，进入课时表后选择你想上的一对一英语课时间。</p>
+            <p>先选择老师，再进入该老师的课时表挑选可预约的一对一英语课时间。</p>
           </div>
 
           {error && <div className="student-status student-status-error student-status-animated">{error}</div>}
@@ -66,7 +71,7 @@ export default function TeacherListPage() {
             </div>
           ) : teachers.length === 0 ? (
             <div className="student-empty-state student-empty-state-enhanced">
-              <div className="student-empty-icon">👨‍🏫</div>
+              <div className="student-empty-icon">教师</div>
               <p>当前还没有可预约的老师。</p>
             </div>
           ) : (

@@ -55,7 +55,7 @@ export default function ProfilePage() {
     <main className="page-shell">
       <header className="home-header">
         <div className="container home-header-inner">
-          <a href="#/" className="brand-mark">
+          <a href="#/profile" className="brand-mark">
             English Learning
           </a>
           <button className="button student-button-danger" onClick={handleLogout}>
