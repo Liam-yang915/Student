@@ -41,10 +41,48 @@ export interface TeacherSlot {
   start_time: string;
 }
 
+export interface StudentCourseEnrollmentItem {
+  id: number;
+  status: string;
+  activated_at: string | null;
+  expires_at: string | null;
+  duration_days_snapshot: number;
+  class_count_snapshot: number;
+  used_class_count: number;
+  remaining_class_count: number;
+  course: null | {
+    id: number;
+    name: string;
+    duration_days: number;
+    class_count: number;
+    price: string | number;
+  };
+}
+
+export interface LibraryTextbookItem {
+  id: number;
+  name: string;
+  description: string | null;
+  cover_image_url: string | null;
+  lesson_count: number;
+  current_lesson: null | {
+    id: number;
+    name: string;
+  };
+}
+
+export interface LibraryLessonItem {
+  id: number;
+  name: string;
+  pdf_url: string;
+  is_current: boolean;
+}
+
 export interface StudentBookingItem {
   id: number;
   status: string;
   booked_at: string | null;
+  student_course_enrollment_id: number | null;
   teacher: null | {
     id: number;
     name: string;
@@ -55,6 +93,10 @@ export interface StudentBookingItem {
     slot_date: string;
     start_time: string;
     status: string;
+  };
+  course: null | {
+    id: number;
+    name: string;
   };
   current_textbook: null | {
     id: number;
@@ -100,6 +142,42 @@ export interface TeacherSlotsResponse {
       bio: string | null;
     };
     slots: TeacherSlot[];
+  };
+  message?: string;
+}
+
+export interface LibraryTextbooksResponse {
+  success: boolean;
+  data?: LibraryTextbookItem[];
+  message?: string;
+}
+
+export interface LibraryLessonsResponse {
+  success: boolean;
+  data?: {
+    textbook: {
+      id: number;
+      name: string;
+      description: string | null;
+      cover_image_url: string | null;
+    };
+    lessons: LibraryLessonItem[];
+  };
+  message?: string;
+}
+
+export interface LessonPreviewResponse {
+  success: boolean;
+  data?: {
+    id: number;
+    name: string;
+    pdf_url: string;
+    previous_lesson_id: number | null;
+    next_lesson_id: number | null;
+    textbook: {
+      id: number;
+      name: string;
+    };
   };
   message?: string;
 }
@@ -187,7 +265,51 @@ export const authService = {
     return await response.json();
   },
 
-  async bookSlot(teacherCourseScheduleId: number): Promise<BookingResponse> {
+  async getCourses(): Promise<{ success: boolean; data?: StudentCourseEnrollmentItem[]; message?: string }> {
+    const response = await fetch(`${API_BASE_URL}/student/courses`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Accept': 'application/json',
+      },
+    });
+
+    return await response.json();
+  },
+
+  async getLibraryTextbooks(): Promise<LibraryTextbooksResponse> {
+    const response = await fetch(`${API_BASE_URL}/student/library/textbooks`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Accept': 'application/json',
+      },
+    });
+
+    return await response.json();
+  },
+
+  async getLibraryLessons(textbookId: string): Promise<LibraryLessonsResponse> {
+    const response = await fetch(`${API_BASE_URL}/student/library/textbooks/${textbookId}/lessons`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Accept': 'application/json',
+      },
+    });
+
+    return await response.json();
+  },
+
+  async getLessonPreview(lessonId: string): Promise<LessonPreviewResponse> {
+    const response = await fetch(`${API_BASE_URL}/student/library/lessons/${lessonId}`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Accept': 'application/json',
+      },
+    });
+
+    return await response.json();
+  },
+
+  async bookSlot(teacherCourseScheduleId: number, studentCourseEnrollmentId: number): Promise<BookingResponse> {
     const response = await fetch(`${API_BASE_URL}/student/bookings`, {
       method: 'POST',
       headers: {
@@ -195,7 +317,10 @@ export const authService = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify({ teacher_course_schedule_id: teacherCourseScheduleId }),
+      body: JSON.stringify({
+        teacher_course_schedule_id: teacherCourseScheduleId,
+        student_course_enrollment_id: studentCourseEnrollmentId,
+      }),
     });
 
     return await response.json();

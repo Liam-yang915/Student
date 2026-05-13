@@ -69,7 +69,7 @@ export default function ProfilePage() {
           <div className="section-heading">
             <span className="section-kicker">Student Profile</span>
             <h2>个人信息</h2>
-            <p>管理你的学生资料，查看已预约课时，或进入老师列表开始预约一对一英语课。</p>
+            <p>管理你的学生资料，查看已预约课时，浏览课本内容，或进入老师列表开始预约一对一英语课。</p>
           </div>
 
           <div className="profile-hero-card hero-card">
@@ -102,8 +102,14 @@ export default function ProfilePage() {
             </div>
 
             <div className="hero-actions">
+              <button className="button button-secondary" onClick={() => { window.location.hash = '#/courses'; }}>
+                我的课程
+              </button>
               <button className="button button-secondary" onClick={() => { window.location.hash = '#/bookings'; }}>
                 查看已预约课时
+              </button>
+              <button className="button button-secondary" onClick={() => { window.location.hash = '#/library'; }}>
+                浏览课本与课文
               </button>
               <button className="button button-primary" onClick={() => { window.location.hash = '#/teachers'; }}>
                 去选老师和课时
